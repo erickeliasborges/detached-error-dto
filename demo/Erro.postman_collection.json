@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "2e106e59-769f-4e5a-afc5-0f3403dd457c",
+		"name": "Erro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14825453"
+	},
+	"item": [
+		{
+			"name": "Passo 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"grupo1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/teste/group",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"teste",
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passo 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"teste\",\n    \"emailGroups\": [\n        {\n            \"emailGroup\": {\n                \"id\": 1\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/teste/newsletter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"teste",
+						"newsletter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passo 3 - Detached error",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1,\n    \"description\": \"teste\",\n    \"emailGroups\": [\n        {\n            \"id\": 1,\n            \"emailGroup\": {\n                \"id\": 1\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/teste/newsletter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"teste",
+						"newsletter"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
