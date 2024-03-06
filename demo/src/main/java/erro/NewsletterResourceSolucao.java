@@ -11,9 +11,9 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.Objects;
 
-@Path("erro")
+@Path("solucao")
 @RequestScoped
-public class NewsletterResourceErro {
+public class NewsletterResourceSolucao {
 
     @Inject
     EntityManager entityManager;
@@ -57,11 +57,28 @@ public class NewsletterResourceErro {
         if (Objects.isNull(dto.getId()))
             return newsletterMapper.toEntity(dto);
         else {
-            NewsletterErro entityDatabase = entityManager.find(NewsletterErro.class, dto.getId());
-            newsletterMapper.copyDtoToEntity(dto, entityDatabase);
-            entityManager.flush(); // Força o flush pra simular o erro
-            return entityDatabase;
+            NewsletterErro detachedEntity = getDetachedEntityFromDb(dto.getId());
+            newsletterMapper.copyDtoToEntity(dto, detachedEntity);
+            return detachedEntity;
         }
+    }
+
+    /**
+     * Cria uma nova instância da entidade e passa todos os campos da
+     * entidade encontrada no banco para a nova instância,
+     * isso é feito para forçar o get de todos os campos na entidade do banco, inicializando as propriedades LAZY.
+     * Tentei utilizar o entityManager.detach na própria entidade do banco após converter,
+     * para não precisar criar uma nova instância, porém assim,
+     * se tiver propriedades LAZY que não foram carregadas antes de chamar o detach,
+     * irá ocorrer o erro 'failed to lazily initialize a collection of role' ao chamar o get dessas propriedades.
+     * @param id
+     * @return
+     */
+    private NewsletterErro getDetachedEntityFromDb(Long id) {
+        NewsletterErro databaseEntity = entityManager.find(NewsletterErro.class, id);
+        NewsletterErro entityDetached = new NewsletterErro();
+        newsletterMapper.copyEntityToEntity(databaseEntity, entityDetached);
+        return entityDetached;
     }
 
 }

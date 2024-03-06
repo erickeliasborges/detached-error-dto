@@ -27,4 +27,6 @@ public interface GenericMapper<T, D> {
 
     void copyEntityToDto(T entity, @MappingTarget D dto);
 
+    void copyEntityToEntity(T source, @MappingTarget T target);
+
 }
