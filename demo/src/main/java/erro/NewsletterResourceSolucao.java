@@ -67,7 +67,7 @@ public class NewsletterResourceSolucao {
      * Cria uma nova instância da entidade e passa todos os campos da
      * entidade encontrada no banco para a nova instância,
      * isso é feito para forçar o get de todos os campos na entidade do banco, inicializando as propriedades LAZY.
-     * Tentei utilizar o entityManager.detach na própria entidade do banco após converter,
+     * Tentei utilizar somente o detach do EntityManager na própria entidade do banco após converter,
      * para não precisar criar uma nova instância, porém assim,
      * se tiver propriedades LAZY que não foram carregadas antes de chamar o detach,
      * irá ocorrer o erro 'failed to lazily initialize a collection of role' ao chamar o get dessas propriedades.
@@ -78,6 +78,7 @@ public class NewsletterResourceSolucao {
         NewsletterErro databaseEntity = entityManager.find(NewsletterErro.class, id);
         NewsletterErro entityDetached = new NewsletterErro();
         newsletterMapper.copyEntityToEntity(databaseEntity, entityDetached);
+        entityManager.detach(databaseEntity);
         return entityDetached;
     }
 
